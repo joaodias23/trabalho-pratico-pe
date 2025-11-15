@@ -1,5 +1,5 @@
 
-// CodeSavanna || Under Construction || Ignore All Stupid Code
+// CodeSavanna || Under Construction || VITOR SE ESTIVERES A VER ISTO IGNORA AS HELPER FUNCTIONS, APENAS CONFIA QUE ESTAO OTIMAS E OTIMIZADAS!
 
 import java.io.*;
 import java.util.Scanner;
@@ -7,6 +7,11 @@ import java.util.Scanner;
 public class Main {
 
     public static void estatisticasHabitat() throws IOException{
+
+        // criar array de habitats unicos no animais.csv
+        // fazer contagem de quantas vezes aparecem no csv (para contar os animais presentes)
+        // para cada iteracao, guardar o id do animal no habitat
+        // ir ao ficheiro interacoes e contar quantas vezes ha uma interacao e valor pago
 
         File file = new File("./files/animais.csv");
 
@@ -74,60 +79,9 @@ public class Main {
             otherIndex++;
         }
 
-//        File file2 = new File("./files/animais.csv");
-//
-//        Scanner sc3 = new Scanner(file2);
-//
-//        int [] uniqueInteractionCounter = new int[40];
-//
-//        if(sc3.hasNextLine()){
-//            sc3.nextLine();
-//        }
-//
-//        String [] arrozinho = new String[40];
-//        int superIndex = 0;
-//
-//        while(sc3.hasNextLine()){
-//            String linhosa = sc3.nextLine();
-//            String [] arroz = linhosa.split(";");
-//
-//            if(uniqueHabitatsArray[superIndex].equals(arroz[3])){
-//
-//                arrozinho[superIndex] = arroz[0];
-//
-//                superIndex++;
-//
-//                File file3 = new File("./files/interacoes.csv");
-//
-//                Scanner sc4 = new Scanner(file3);
-//
-//                if(sc4.hasNextLine()){
-//                    sc4.nextLine();
-//                }
-//                for (int h = 0; h < newIndex; h++) {
-//                    int interacoesCounter = 0;
-//                    for (int i = 0; i < arrozinho.length; i++){
-//
-//                        if(!(arrozinho[i] == null)){
-//                            while(sc4.hasNextLine()){
-//                                String linheira = sc4.nextLine();
-//                                String [] arrasou = linheira.split(";");
-//
-//                                if(arrozinho[i].equals(arrasou[3])){
-//                                    interacoesCounter++;
-//                                }
-//                            }
-//                        }
-//                    }
-//                    uniqueInteractionCounter[superIndex - 1] = interacoesCounter;
-//                }
-//            }
-//        }
-
         for (int i = 0; i < otherIndex; i++) {
             System.out.println("Habitat: " + uniqueHabitatsArray[i]);
             System.out.println("Animais No Habitat: " + uniqueHabitatCounter[i]);
-//            System.out.println("Interacoes: " + uniqueInteractionCounter[i]);
         }
 
     }
@@ -323,69 +277,164 @@ public class Main {
         }
     }
 
-//    public static void topTresApadrinhamento() throws IOException{
-//
-//    }
+    public static void topTresApadrinhamento() throws IOException{
+        // cada especie = somar apadrinhamentos e valorPago de apadrinhamento
+        // criar ficheiro com idsAnimais a partir do animais.csv
+        // ir ao interacoes.csv contar apadrinhamentos de cada id e valor mensal desse apadrinhamento
+        // dar sort crescente
+        // imprimir indice 0 1 e 2, se houver menos, while loop ou o crl
 
-//    public static void maisPopular() throws IOException{
-//
-//        File file = new File("./files/interacoes.csv");
-//
-//        Scanner scArraySize = new Scanner(file);
-//
-//        int counterAnimal = 0;
-//
-//        while(scArraySize.hasNextLine()){
-//            scArraySize.nextLine();
-//            counterAnimal++;
-//        }
-//
-//        String [] idAnimais = new String[counterAnimal];
-//
-//        Scanner scFillArray = new Scanner(file);
-//
-//        System.out.println("==================== IDs Gerais ====================");
-//
-//        int index = 0;
-//
-//        while(scFillArray.hasNextLine()){
-//            String linha = scFillArray.nextLine();
-//            String [] array = linha.split(";");
-//
-//            for (int i = 0; i < idAnimais.length; i++){
-//                if(!(array[3].equalsIgnoreCase(idAnimais[i]))){
-//                    idAnimais[i] = array[3];
-//                }
-//            }
-//
-//            for (int i = 0; i < 1; i++){
-//                System.out.println(idAnimais[i]);
-//            }
-//        }
-//
-//        System.out.println("====================================================");
-//
-//        String [] idUniqueAnimais = new String[counterAnimal];
-//
-//        idUniqueAnimais[0] = idAnimais[0];
-//
-//        for (int i = 0; i < idAnimais.length; i++){
-//            for (int j = 0; j < idUniqueAnimais.length; j++) {
-//                if(!(idAnimais[i].equalsIgnoreCase(idUniqueAnimais[j]))){
-//                    idUniqueAnimais[i] = idAnimais[i];
-//                }
-//            }
-//        }
-//
-//        System.out.println("==================== IDs Unicos ====================");
-//
-//        for (int i = 0; i < idUniqueAnimais.length; i++){
-//            System.out.println(idUniqueAnimais[i]);
-//        }
-//
-//        System.out.println("====================================================");
-//
-//    }
+        File file = new File("./files/animais.csv");
+        File fileInter = new File("./files/interacoes.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if(sc.hasNextLine()){
+            sc.nextLine();
+        }
+
+        String [] idsAnimais = new String [50];
+        String [] especie = new String[50];
+        int [] arrayDeContagemApadrinhamento = new int[50];
+        double [] arrayDeContagemValorPago = new double[50];
+        int index = 0;
+
+        while(sc.hasNextLine()){
+            String linha = sc.nextLine();
+            String [] arrayLinha = linha.split(";");
+
+            idsAnimais[index] = arrayLinha[0];
+            especie[index++] = arrayLinha[2];
+
+            Scanner inter = new Scanner(fileInter);
+
+            if(inter.hasNextLine()){
+                inter.nextLine();
+            }
+
+            int totalApadrinhamentos = 0;
+            double valorPagoTotal = 0.0;
+
+            while(inter.hasNextLine()){
+                String line = inter.nextLine();
+                String [] interArray = line.split(";");
+
+                if(idsAnimais[index - 1].equals(interArray[3]) && interArray[2].equals("APADRINHAMENTO")){
+                    totalApadrinhamentos++;
+                    valorPagoTotal += Double.parseDouble(interArray[5]);
+                }
+            }
+
+            arrayDeContagemApadrinhamento[index - 1] = totalApadrinhamentos;
+            arrayDeContagemValorPago[index - 1] = valorPagoTotal;
+
+        }
+
+        for (int i = 0; i < arrayDeContagemApadrinhamento.length - 1; i++) {
+            for (int j = 0; j < arrayDeContagemApadrinhamento.length - 1; j++) {
+                if(arrayDeContagemApadrinhamento[j] < arrayDeContagemApadrinhamento[j+1]){
+
+                    int temp = arrayDeContagemApadrinhamento[j];
+                    arrayDeContagemApadrinhamento[j] = arrayDeContagemApadrinhamento[j+1];
+                    arrayDeContagemApadrinhamento[j+1] = temp;
+
+                    double tempo = arrayDeContagemValorPago[j];
+                    arrayDeContagemValorPago[j] = arrayDeContagemValorPago[j+1];
+                    arrayDeContagemValorPago[j+1] = tempo;
+
+                    String tempinho = especie[j];
+                    especie[j] = especie[j+1];
+                    especie[j+1] = tempinho;
+                }
+            }
+        }
+
+        int counter = 1;
+
+        System.out.println("\nTOP 3 ESPECIES MAIS APADRINHADAS\n");
+
+        for (int i = 0; i < 3; i++) {
+            if(especie[i] != null){
+                System.out.println(counter + ") " + especie[i]);
+                System.out.println("Nº de apadrinhamentos: " + arrayDeContagemApadrinhamento[i]);
+                System.out.println("Valor Mensal Total: " + arrayDeContagemValorPago[i]);
+                counter++;
+            }
+        }
+    }
+
+    public static void maisPopular() throws IOException{
+
+        // guardar todos os ids num array do animais.csv
+        // fazer uma contagem no interacoes para cada id quantas vezes aparecem
+        // ver qual aparece mais
+        // ir ao animais.csv ver qual e o nome e a especie e printar
+
+        File file = new File("./files/animais.csv");
+        File fileInter = new File("./files/interacoes.csv");
+
+        Scanner sc = new Scanner(file);
+
+        if(sc.hasNextLine()){
+            sc.nextLine();
+        }
+
+        String [] idsAnimais = new String [50];
+        String [] nomeEspecie = new String[50];
+        int [] arrayDeContagem = new int[50];
+        int index = 0;
+
+        while(sc.hasNextLine()){
+            String linha = sc.nextLine();
+            String [] arrayLinha = linha.split(";");
+
+            idsAnimais[index] = arrayLinha[0];
+            nomeEspecie[index++] = arrayLinha[1] + " " + arrayLinha[2];
+
+            Scanner inter = new Scanner(fileInter);
+
+            if(inter.hasNextLine()){
+                inter.nextLine();
+            }
+
+            int totalInter = 0;
+
+            while(inter.hasNextLine()){
+                String line = inter.nextLine();
+                String [] interArray = line.split(";");
+
+                if(idsAnimais[index - 1].equals(interArray[3])){
+                    totalInter++;
+                }
+            }
+            arrayDeContagem[index - 1] = totalInter;
+        }
+
+        // sort
+
+        for (int i = 0; i < arrayDeContagem.length -1; i++) {
+            for (int j = 0; j < arrayDeContagem.length -1; j++) {
+                if(arrayDeContagem[j] < arrayDeContagem[j+1]){
+                    int temp = arrayDeContagem[j];
+                    arrayDeContagem[j] = arrayDeContagem[j+1];
+                    arrayDeContagem[j+1] = temp;
+
+                    String tempo = idsAnimais[j];
+                    idsAnimais[j] = idsAnimais[j+1];
+                    idsAnimais[j+1] = tempo;
+
+                    String tempaco = nomeEspecie[j];
+                    nomeEspecie[j] = nomeEspecie[j+1];
+                    nomeEspecie[j+1] = tempaco;
+                }
+            }
+        }
+
+        System.out.println("\nO mais popular:");
+        System.out.println(idsAnimais[0]);
+        System.out.println(arrayDeContagem[0]);
+        System.out.println(nomeEspecie[0]);
+    }
 
     public static void receitaTotal() throws IOException{
 
@@ -487,18 +536,17 @@ public class Main {
 
     }
 
-    public static void conteudoAnimais() throws IOException {
+    public static void conteudoInteracoes() throws IOException {
 
-        File file = new File("./files/animais.csv");
+        File file = new File("./files/interacoes.csv");
 
         Scanner sc = new Scanner(file);
 
-        System.out.println("============================= LISTA DE ANIMAIS =============================");
+        System.out.println("============================= LISTA DE INTERACOES =============================");
         while (sc.hasNextLine()) {
             String linha = sc.nextLine();
             String [] array = linha.split(";");
-            System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " |");
-
+            System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " | " + array[6] + " |");
         }
         System.out.println("===================================================================");
     }
@@ -519,20 +567,20 @@ public class Main {
         System.out.println("===================================================================");
     }
 
-    public static void conteudoInteracoes() throws IOException {
+    public static void conteudoAnimais() throws IOException {
 
-        File file = new File("./files/interacoes.csv");
+        File file = new File("./files/animais.csv");
 
         Scanner sc = new Scanner(file);
 
-        System.out.println("============================= LISTA DE INTERACOES =============================");
+        System.out.println("\n====================|| LISTA ANIMAIS ||====================");
         while (sc.hasNextLine()) {
             String linha = sc.nextLine();
             String [] array = linha.split(";");
-            System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " | " + array[6] + " |");
+            System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " |");
 
         }
-        System.out.println("===================================================================");
+        System.out.println("==========================================================");
     }
 
     public static void menuCliente() {
@@ -543,7 +591,7 @@ public class Main {
 
         do {
 
-            System.out.println("\n\n==================== MENU CLIENTE CODESAVANNA ====================");
+            System.out.println("\n====================|| CLIENTE CODESAVANNA ||====================");
             System.out.println("1. Ver Catálogo De Animais Por Habitat");
             System.out.println("2. Ver Atividades De Um Animal");
             System.out.println("3. Simular Apadrinhamento De Um Animal");
@@ -587,40 +635,62 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        int opcao;
+        int opcaoAdmin;
 
         do {
 
-            System.out.println("\n\n==================== MENU ADMIN CODESAVANNA ====================");
-            System.out.println("1. Listar Conteúdo Dos Ficheiros");
-            System.out.println("2. Estatísticas Gerais De Interações");
-            System.out.println("3. Receita Total Por Tipo De Interação");
-            System.out.println("4. Animal Mais Popular");
-            System.out.println("5. Top 3 Espécies Com Mais Apadrinhamentos");
-            System.out.println("6. Listar Padrinhos De Um Animal");
-            System.out.println("7. Espetáculo Mais Rentável");
-            System.out.println("8. Ranking De Animais Em Perigo De Extinção");
-            System.out.println("9. Estatísticas Por Habitat");
-            System.out.println("0. Voltar");
+            System.out.println("\n====================|| ADMIN CODESAVANNA ||====================");
+            System.out.println("1. === Listar Conteúdo Dos Ficheiros");
+            System.out.println("2. === Estatísticas Gerais De Interações");
+            System.out.println("3. === Receita Total Por Tipo De Interação");
+            System.out.println("4. === Animal Mais Popular");
+            System.out.println("5. === Top 3 Espécies Com Mais Apadrinhamentos");
+            System.out.println("6. === Listar Padrinhos De Um Animal");
+            System.out.println("7. === Espetáculo Mais Rentável");
+            System.out.println("8. === Ranking De Animais Em Perigo De Extinção");
+            System.out.println("9. === Estatísticas Por Habitat");
+            System.out.println("0. === Voltar");
+            System.out.println("===============================================================");
 
-            System.out.print("Opção: ");
-            opcao = input.nextInt();
+            System.out.print("\n=== Opção: ");
 
-            switch (opcao) {
+            while (!input.hasNextInt()) {
+                System.out.println("\n===================");
+                System.out.println("Mete um número");
+                System.out.println("===================");
+                input.nextLine();
+                System.out.print("\n=== Opção: ");
+            }
+
+            opcaoAdmin = input.nextInt();
+            input.nextLine();
+
+            switch (opcaoAdmin) {
 
                 case 1:
 
                     int opcaoConteudo;
 
                     do{
-                        System.out.println("\n\n==================== LISTAR CONTEÚDO ====================");
-                        System.out.println("1. Animais");
-                        System.out.println("2. Clientes");
-                        System.out.println("3. Interações");
-                        System.out.println("0. Voltar");
+                        System.out.println("\n====================|| LISTAR CONTEÚDO ||====================");
+                        System.out.println("1. === Animais");
+                        System.out.println("2. === Clientes");
+                        System.out.println("3. === Interações");
+                        System.out.println("0. === Voltar");
+                        System.out.println("===============================================================");
 
-                        System.out.print("Opção: ");
+                        System.out.print("\n=== Opção: ");
+
+                        while (!input.hasNextInt()) {
+                            System.out.println("\n===================");
+                            System.out.println("Mete um número");
+                            System.out.println("===================");
+                            input.nextLine();
+                            System.out.print("\n=== Opção: ");
+                        }
+
                         opcaoConteudo = input.nextInt();
+                        input.nextLine();
 
                         switch(opcaoConteudo){
 
@@ -633,7 +703,14 @@ public class Main {
                             case 3:
                                 conteudoInteracoes();
                                 break;
-
+                            case 0:
+                                System.out.println("\nRegressando ao menu anterior...");
+                                break;
+                            default:
+                                System.out.println("\n================");
+                                System.out.println("Opção Inválida");
+                                System.out.println("================");
+                                break;
                         }
                     } while (opcaoConteudo != 0);
                     break;
@@ -645,10 +722,10 @@ public class Main {
                     receitaTotal();
                     break;
                 case 4:
-                    // maisPopular();
+                    maisPopular();
                     break;
                 case 5:
-                    // topTresApadrinhamento();
+                    topTresApadrinhamento();
                     break;
                 case 6:
                     listarPadrinhos();
@@ -662,45 +739,87 @@ public class Main {
                 case 9:
                     estatisticasHabitat();
                     break;
+                case 0:
+                    System.out.println("\nRegressando ao menu anterior...");
+                    break;
                 default:
-                    System.out.println("\nOpção Inválida");
+                    System.out.println("\n================");
+                    System.out.println("Opção Inválida");
+                    System.out.println("================");
                     break;
             }
 
-        } while (opcao != 0);
+        } while (opcaoAdmin != 0);
     }
 
     public static void menuLogin() throws IOException{
 
         Scanner input = new Scanner(System.in);
 
-        int opcaoLogin;
+        int opcaoLogin = 0;
         String username, password;
 
         do {
 
-            System.out.println("\n==================== MENU LOGIN ====================");
-            System.out.println("1. ADMIN");
-            System.out.println("2. CLIENTE");
-            System.out.println("0. SAIR");
+            System.out.println("                                                                      \n" +
+                    " _____ _____ ____  _____    _____ _____ _____ _____ _____ _____ _____ \n" +
+                    "|     |     |    \\|   __|  |   __|  _  |  |  |  _  |   | |   | |  _  |\n" +
+                    "|   --|  |  |  |  |   __|  |__   |     |  |  |     | | | | | | |     |\n" +
+                    "|_____|_____|____/|_____|  |_____|__|__|\\___/|__|__|_|___|_|___|__|__|\n" +
+                    "                                                                      ");
 
-            System.out.print("\nTipo de Utilizador: ");
+            System.out.println("                   .-----------------._,,\n" +
+                    "                   | Bem-vindo ao zoo (_\")=\n" +
+                    "                   | onde o código é   |||                __\n" +
+                    "                   |  o animal mais    ||#\\_____       .-/  \\\n" +
+                    "            ssgg   |--selvagem!--------|\\# # # #\\    .''  ..'----,_\n" +
+                    "       ____SG ..]  |       |/         | \\##_#_#/\\ =:.'-\\         )\\\n" +
+                    "    ,-( _   SS(_9)_|      _(\")        | |/|/\\|\\|   ::   |  ,_   /  `\n" +
+                    "   / (_____;-.____;;    o(_,\\\\        | I I  I I    `   [|_/\\\\_]");
+
+            System.out.println("\n\n====================|| LOGIN ||====================");
+            System.out.println("1. === ADMIN");
+            System.out.println("2. === CLIENTE");
+            System.out.println("0. === SAIR");
+            System.out.println("===================================================");
+
+            System.out.print("\n=== Tipo de Utilizador: ");
+
+            while (!input.hasNextInt()) {
+                System.out.println("\n===================");
+                System.out.println("Mete um número");
+                System.out.println("===================");
+                input.nextLine();
+                System.out.print("\n=== Tipo de Utilizador: ");
+            }
+
             opcaoLogin = input.nextInt();
+            input.nextLine();
 
             switch (opcaoLogin) {
 
                 case 1:
 
-                    System.out.print("\nUsername: ");
+                    System.out.print("\n=== Username: ");
                     username = input.next();
 
-                    System.out.print("Password: ");
+                    System.out.print("=== Password: ");
                     password = input.next();
 
-                    if (username.equals("admin") && password.equals("admin")) {
+                    if (username.equals("admin") && password.equals("code")) {
                         menuAdmin();
+                    } else if (username.equals(("admin"))){
+                        System.out.println("\n===================");
+                        System.out.println("Password Incorreta");
+                        System.out.println("===================");
+                    } else if (password.equals("code")) {
+                        System.out.println("\n===================");
+                        System.out.println("Username Incorreto");
+                        System.out.println("===================");
                     } else {
-                        System.out.println("Login incorreto");
+                        System.out.println("\n===================");
+                        System.out.println("Não Sabes Escrever");
+                        System.out.println("===================");
                     }
 
                     break;
@@ -710,11 +829,13 @@ public class Main {
                     break;
 
                 case 0:
-                    System.out.println("\nObrigado! Volte sempre...");
+                    System.out.println("\nObrigado! Worten sempre...");
                     break;
 
                 default:
-                    System.out.println("\nOpção Inválida");
+                    System.out.println("\n================");
+                    System.out.println("Opção Inválida");
+                    System.out.println("================");
                     break;
             }
 
