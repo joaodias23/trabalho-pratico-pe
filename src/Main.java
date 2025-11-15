@@ -55,7 +55,9 @@ public class Main {
 
         int otherIndex = 0;
 
-        int [] uniqueHabitatCounter = new int[40];
+        int [] animalCounter = new int[40];
+        int [] interCounter = new int[40];
+        double [] moneyCounter = new double[40];
 
         while (otherIndex < newIndex){
             Scanner sc1 = new Scanner(file1);
@@ -64,26 +66,49 @@ public class Main {
                 sc1.nextLine();
             }
 
-            int totalzinho = 0;
+            int totalzinhoAnimais = 0;
+            int totalzinhoInteracoes = 0;
+            double totalzinhoReceita = 0.0;
 
             while(sc1.hasNextLine()){
                 String line = sc1.nextLine();
                 String [] arrayCounter = line.split(";");
 
                 if(uniqueHabitatsArray[otherIndex].equals(arrayCounter[3])){
-                    totalzinho++;
+                    totalzinhoAnimais++;
+
+                    File fileInter = new File("./files/interacoes.csv");
+
+                    Scanner inter = new Scanner(fileInter);
+
+                    if(inter.hasNextLine()){
+                        inter.nextLine();
+                    }
+
+                    while (inter.hasNextLine()){
+                        String lineInter = inter.nextLine();
+                        String [] arrayInter = lineInter.split(";");
+
+                        if(arrayCounter[0].equals(arrayInter[3])){
+                            totalzinhoInteracoes++;
+                            totalzinhoReceita += Double.parseDouble(arrayInter[5]);
+                        }
+                    }
                 }
             }
 
-            uniqueHabitatCounter[otherIndex] = totalzinho;
+            animalCounter[otherIndex] = totalzinhoAnimais;
+            interCounter[otherIndex] = totalzinhoInteracoes;
+            moneyCounter[otherIndex] = totalzinhoReceita;
             otherIndex++;
         }
 
         for (int i = 0; i < otherIndex; i++) {
             System.out.println("Habitat: " + uniqueHabitatsArray[i]);
-            System.out.println("Animais No Habitat: " + uniqueHabitatCounter[i]);
+            System.out.println("Animais No Habitat: " + animalCounter[i]);
+            System.out.println("Nº de interacoes: " + interCounter[i]);
+            System.out.println("Receita associada: " + moneyCounter[i]);
         }
-
     }
 
     public static void rankingExtincao() throws IOException{
