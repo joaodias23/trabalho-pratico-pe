@@ -21,7 +21,7 @@ public class Main {
         String habitat = "";
         String diet = "";
         String extincao = "";
-        String tentativa = "";
+        String tentativa;
         int tentativas = 0;
 
         while(sc.hasNextLine()){
@@ -58,35 +58,42 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        System.out.println("PISTA 1: " + habitat);
-        System.out.println("PISTA 2: " + diet);
-        System.out.println("PISTA 3: " + extincao);
+        System.out.println("\n===================|| ADIVINHA A ESPÉCIE ||===================");
+
+        System.out.println("=== PISTA 1: " + habitat);
+        System.out.println("=== PISTA 2: " + diet);
+        System.out.println("=== PISTA 3: " + extincao);
+
+        System.out.println("==============================================================");
 
         while(true){
-            System.out.print("Qual é a espécie? ");
+            System.out.print("=== Qual é a espécie? ");
             tentativa = input.nextLine();
             tentativas++;
 
             if(tentativa.equalsIgnoreCase(chosenAnimal)){
-                System.out.println("ACERTOU MISERAVII! Acertou em " + tentativas + " tentativa(s)");
+                System.out.println("=== ACERTOU MISERAVII! Acertou em " + tentativas + " tentativa(s)");
                 break;
             } else {
-                System.out.println("Errado! Vai de novo filho");
+                System.out.println("=== Errado! Vai de novo filho");
             }
         }
+        System.out.println("==============================================================");
     }
 
     public static void simularApadrinhamento() throws IOException{
 
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Como é que se chama? ");
+        System.out.println("\n===================|| NOVO APADRINHAMENTO ||===================");
+
+        System.out.print("=== Como é que se chama? ");
         String nome = input.nextLine();
-        System.out.print("Qual é o seu email? ");
+        System.out.print("=== Qual é o seu email? ");
         String email = input.nextLine();
-        System.out.print("Escolha um animal (A01-32): ");
+        System.out.print("=== Escolha um animal (A01-32): ");
         String escolha = input.nextLine();
-        System.out.print("Quanto pretende pagar por mês? (Introduza apenas o montante): ");
+        System.out.print("=== Quanto pretende pagar por mês? (Apenas Montante): ");
         double pagamento = input.nextDouble();
 
         String plano = "";
@@ -123,19 +130,25 @@ public class Main {
                 habitat = array[3];
             }
         }
+        System.out.println("===============================================================");
 
-        System.out.println("Resumo do Apadrinhamento:");
-        System.out.println("Padrinho(a): " + nome + " (" + email + ")");
-        System.out.println("Animal: " + animal + " (" + especie + ") - " + habitat);
-        System.out.println("Plano: " + plano);
-        System.out.println("Valor: " + pagamento + "€/mês");
+        System.out.println("\n===================|| RESUMO APADRINHAMENTO ||===================");
+
+        System.out.println("=== Padrinho(a): " + nome + " (" + email + ")");
+        System.out.println("=== Animal: " + animal + " (" + especie + ") - " + habitat);
+        System.out.println("=== Plano: " + plano);
+        System.out.println("=== Valor: " + pagamento + "€/mês");
+
+        System.out.println("=================================================================");
     }
 
     public static void atividadesAnimal() throws IOException{
 
         Scanner input = new Scanner(System.in);
 
-        System.out.print("Introduza um ID (A01-32): ");
+        System.out.println("\n===================|| ATIVIDADE DO ANIMAL ||===================");
+
+        System.out.print("=== Introduza um ID (A01-32): ");
         String id = input.nextLine();
 
         boolean exists = false;
@@ -152,7 +165,7 @@ public class Main {
             String [] array = linha.split(";");
 
             if(array[0].equals(id)){
-                System.out.println("Atividades do animal " + array[1] + "(" + array[2] + ")");
+                System.out.println("=== Atividade Do Animal: " + array[1] + "(" + array[2] + ")");
                 exists = true;
 
                 String [] nomeEspetaculo = new String[40];
@@ -213,17 +226,18 @@ public class Main {
                     }
                 }
 
-                System.out.println("\"ESPETAAACUULOOO\" - Fernando Mendes:");
+                System.out.println("=== Espetáculos:");
                 for (int i = 0; i < espetaculoCounter; i++) {
                     System.out.println("- " + nomeEspetaculo[i] + " (" + countEspetaculo[i] + " vezes)");
                 }
 
-                System.out.println("Alimentacao - Fernando Mendes tambem acho eu:");
+                System.out.println("=== Alimentações:");
                 for (int i = 0; i < alimentacaoCounter; i++) {
                     System.out.println("- " + nomeAlimentacao[i] + " (" + countAlimentation[i] + " vezes)");
                 }
             }
         }
+        System.out.println("===============================================================");
 
         if(!exists){
             System.out.println("Animal não existe");
@@ -274,8 +288,10 @@ public class Main {
 
         int otherIndex = 0;
 
-        for (int i = 0; i < newIndex; i++) {
+        System.out.println("\n===================|| CATÁLOGO POR HABITAT ||===================");
 
+        for (int i = 0; i < newIndex; i++) {
+            System.out.println("\n============================================================");
             System.out.println("*** " + uniqueHabitatsArray[otherIndex] + " ***");
 
             Scanner sc1 = new Scanner(file1);
@@ -289,21 +305,17 @@ public class Main {
                 String [] arrayCounter = line.split(";");
 
                 if(uniqueHabitatsArray[otherIndex].equals(arrayCounter[3])){
-                    System.out.println("- " + arrayCounter[1] + "(" + arrayCounter[2] + ")");
+                    System.out.println("--- " + arrayCounter[1] + "(" + arrayCounter[2] + ")");
 
                 }
             }
-            System.out.println();
+            System.out.println("============================================================");
             otherIndex++;
         }
+        System.out.println("\n=================================================================");
     }
 
     public static void estatisticasHabitat() throws IOException{
-
-        // criar array de habitats unicos no animais.csv
-        // fazer contagem de quantas vezes aparecem no csv (para contar os animais presentes)
-        // para cada iteracao, guardar o id do animal no habitat
-        // ir ao ficheiro interacoes e contar quantas vezes ha uma interacao e valor pago
 
         File file = new File("./files/animais.csv");
 
@@ -395,12 +407,16 @@ public class Main {
             otherIndex++;
         }
 
+        System.out.println("\n===================|| ESTATÍSTICAS POR HABITAT ||===================");
         for (int i = 0; i < otherIndex; i++) {
-            System.out.println("Habitat: " + uniqueHabitatsArray[i]);
-            System.out.println("Animais No Habitat: " + animalCounter[i]);
-            System.out.println("Nº de interacoes: " + interCounter[i]);
-            System.out.println("Receita associada: " + moneyCounter[i]);
+            System.out.println("\n============================================================");
+            System.out.println("=== Habitat: " + uniqueHabitatsArray[i]);
+            System.out.println("=== Animais No Habitat: " + animalCounter[i]);
+            System.out.println("=== Nº De Interações: " + interCounter[i]);
+            System.out.println("=== Receita Associada: " + moneyCounter[i]);
+            System.out.println("============================================================");
         }
+        System.out.println("\n====================================================================");
     }
 
     public static void rankingExtincao() throws IOException{
@@ -475,20 +491,20 @@ public class Main {
 
         int rankCounter = 1;
 
-        System.out.println("======================= RANKING DE ESPECIES QUASE NO FIM =======================");
+        System.out.println("\n===================|| RANKING PERIGO EXTINÇÃO ||===================");
         for (int i = arrayOfInterCount.length - 1; i >= 0; i--) {
             if(!(arrayOfNomeAnimal[i] == null)){
                 System.out.println("\n============================================================");
-                System.out.println("RANKING " + rankCounter);
-                System.out.println("Nome Animal: " + arrayOfNomeAnimal[i]);
-                System.out.println("ID: " + arrayOfRespectiveID[i]);
-                System.out.println("Interações: " + arrayOfInterCount[i]);
-                System.out.println("Valor Pago: " + arrayOfMoneyCount[i]);
+                System.out.println("=== RANKING " + rankCounter);
+                System.out.println("=== Nome Do Animal: " + arrayOfNomeAnimal[i]);
+                System.out.println("=== Id: " + arrayOfRespectiveID[i]);
+                System.out.println("=== Interações: " + arrayOfInterCount[i]);
+                System.out.println("=== Valor Pago: " + arrayOfMoneyCount[i]);
                 System.out.println("============================================================");
                 rankCounter++;
             }
         }
-        System.out.println("=======================================================================================");
+        System.out.println("\n===================================================================");
     }
 
     public static void espetaculoMaisRentavel() throws IOException{
@@ -499,6 +515,7 @@ public class Main {
 
         String [] newArray = new String[50];
         String [] newArrayValues = new String[50];
+        String [] newArrayIds = new String[50];
 
         int index = 0;
 
@@ -509,12 +526,16 @@ public class Main {
             if(array[2].equalsIgnoreCase("ESPETACULO")){
                 newArray[index] = array[4];
                 newArrayValues[index] = array[5];
+                newArrayIds[index] = array[3];
                 index++;
             }
         }
 
         double mostProfitable = 0.0;
         String best = "";
+        String bestId = "";
+        String bestAnimal = "";
+        String species = "";
 
         for (int i = 0; i < index; i++) {
 
@@ -529,13 +550,32 @@ public class Main {
             if(total > mostProfitable){
                 mostProfitable = total;
                 best = newArray[i];
+                bestId = newArrayIds[i];
             }
         }
 
-        System.out.println("\n============================= MAIS RENTAVEL =============================\n");
-        System.out.println(mostProfitable + " moneys");
-        System.out.println(best);
-        System.out.println("\n=========================================================================");
+        File fileAnimal = new File("./files/animais.csv");
+        Scanner animal = new Scanner(fileAnimal);
+
+        if(animal.hasNextLine()){
+            animal.nextLine();
+        }
+
+        while(animal.hasNextLine()){
+            String line = animal.nextLine();
+            String [] arrayAnimal = line.split(";");
+
+            if(bestId.equals(arrayAnimal[0])){
+                bestAnimal = arrayAnimal[1];
+                species = arrayAnimal[2];
+            }
+        }
+
+        System.out.println("\n===================|| ESPETÁCULO MAIS RENTÁVEL ||===================");
+        System.out.println("=== Nome Do Espetáculo: " + best);
+        System.out.println("=== Receita Total: " + mostProfitable + "€/mês");
+        System.out.println("=== Animal Principal: " + species + " " + bestAnimal);
+        System.out.println("====================================================================");
     }
 
     public static void listarPadrinhos() throws IOException{
@@ -553,8 +593,10 @@ public class Main {
         String clientName = "";
         String clientEmail = "";
 
-        System.out.print("Introduza o ID do animal: ");
+        System.out.print("\n=== Introduza o ID do animal: ");
         String id = input.nextLine();
+
+        System.out.println("\n========================|| PADRINHOS ||========================\n");
 
         while (sc.hasNextLine()){
             String linha = sc.nextLine();
@@ -581,25 +623,23 @@ public class Main {
                     }
                 }
 
-                System.out.println("--------------------------------------------");
-                System.out.println("Nome do cliente: " + clientID + " (" + clientEmail + ")");
-                System.out.println("Valor mensal pago: " + valorPago);
-                System.out.println("Plano de Apadrinhamento: " + eventName);
-                System.out.println("--------------------------------------------");
+                System.out.println("==================================================");
+                System.out.println("=== Cliente: " + clientID + " (" + clientEmail + ")");
+                System.out.println("=== Valor Mensal: " + valorPago + "€");
+                System.out.println("=== Plano: " + eventName);
+                System.out.println("==================================================");
             }
         }
+        System.out.println("\n===============================================================");
 
         if(!exists){
-            System.out.println("O animal não existe.");
+            System.out.println("\n===================");
+            System.out.println("O Animal Não Existe");
+            System.out.println("===================");
         }
     }
 
     public static void topTresApadrinhamento() throws IOException{
-        // cada especie = somar apadrinhamentos e valorPago de apadrinhamento
-        // criar ficheiro com idsAnimais a partir do animais.csv
-        // ir ao interacoes.csv contar apadrinhamentos de cada id e valor mensal desse apadrinhamento
-        // dar sort crescente
-        // imprimir indice 0 1 e 2, se houver menos, while loop ou o crl
 
         File file = new File("./files/animais.csv");
         File fileInter = new File("./files/interacoes.csv");
@@ -668,24 +708,20 @@ public class Main {
 
         int counter = 1;
 
-        System.out.println("\nTOP 3 ESPECIES MAIS APADRINHADAS\n");
-
+        System.out.println("\n==============|| TOP 3 APADRINHADOS ||==============\n");
         for (int i = 0; i < 3; i++) {
             if(especie[i] != null){
-                System.out.println(counter + ") " + especie[i]);
-                System.out.println("Nº de apadrinhamentos: " + arrayDeContagemApadrinhamento[i]);
-                System.out.println("Valor Mensal Total: " + arrayDeContagemValorPago[i]);
+                System.out.println("=== " + counter + ") " + especie[i]);
+                System.out.println("=== Nº De Apadrinhamentos: " + arrayDeContagemApadrinhamento[i]);
+                System.out.println("=== Valor Mensal Total: " + arrayDeContagemValorPago[i] + "€");
+                System.out.println();
                 counter++;
             }
         }
+        System.out.println("====================================================");
     }
 
     public static void maisPopular() throws IOException{
-
-        // guardar todos os ids num array do animais.csv
-        // fazer uma contagem no interacoes para cada id quantas vezes aparecem
-        // ver qual aparece mais
-        // ir ao animais.csv ver qual e o nome e a especie e printar
 
         File file = new File("./files/animais.csv");
         File fileInter = new File("./files/interacoes.csv");
@@ -727,8 +763,6 @@ public class Main {
             arrayDeContagem[index - 1] = totalInter;
         }
 
-        // sort
-
         for (int i = 0; i < arrayDeContagem.length -1; i++) {
             for (int j = 0; j < arrayDeContagem.length -1; j++) {
                 if(arrayDeContagem[j] < arrayDeContagem[j+1]){
@@ -747,10 +781,11 @@ public class Main {
             }
         }
 
-        System.out.println("\nO mais popular:");
-        System.out.println(idsAnimais[0]);
-        System.out.println(arrayDeContagem[0]);
-        System.out.println(nomeEspecie[0]);
+        System.out.println("\n==============|| ANIMAL MAIS POPULAR ||==============");
+        System.out.println("=== Animal: " + nomeEspecie[0]);
+        System.out.println("=== ID: " + idsAnimais[0]);
+        System.out.println("=== Interações: " + arrayDeContagem[0]);
+        System.out.println("=====================================================");
     }
 
     public static void receitaTotal() throws IOException{
@@ -793,13 +828,14 @@ public class Main {
             totalMoneyCounter += Double.parseDouble(array[5]);
         }
 
-        System.out.println("\n============================= RECEITA TOTAL =============================");
-        System.out.println("Total De Interações: " + totalMoneyCounter + "€");
-        System.out.println("Visitas money: " + totalMoneyVisita + "€");
-        System.out.println("Espetáculos money: " + totalMoneyEspetaculo + "€");
-        System.out.println("Alimentação money: " + totalMoneyAlimentacao + "€");
-        System.out.println("Apadrinhamento money: " + totalMoneyApadrinhamento + "€");
-        System.out.println("===================================================================");
+        System.out.println("\n====================|| RECEITA TOTAL ||====================");
+        System.out.println("=== Receita De Visitas: " + totalMoneyVisita + "€");
+        System.out.println("=== Receita De Espetáculos: " + totalMoneyEspetaculo + "€");
+        System.out.println("=== Receita De Alimentações: " + totalMoneyAlimentacao + "€");
+        System.out.println("=== Receita De Apadrinhamentos: " + totalMoneyApadrinhamento + "€");
+        System.out.println("===========================================================");
+        System.out.println("=== Receita Total: " + totalMoneyCounter + "€");
+        System.out.println("===========================================================");
 
     }
 
@@ -843,13 +879,13 @@ public class Main {
             totalCounter++;
         }
 
-        System.out.println("\n============================= ESTATISTICAS GERAIS =============================");
-        System.out.println("Total De Interações: " + totalCounter);
-        System.out.println("Visitas: " + totalVisita);
-        System.out.println("Espetáculos: " + totalEspetaculo);
-        System.out.println("Alimentação: " + totalAlimentacao);
-        System.out.println("Apadrinhamento: " + totalApadrinhamento);
-        System.out.println("===================================================================");
+        System.out.println("\n====================|| ESTATÍSTICAS GERAIS ||====================");
+        System.out.println("=== Total De Interações: " + totalCounter);
+        System.out.println("=== Visitas: " + totalVisita);
+        System.out.println("=== Espetáculos: " + totalEspetaculo);
+        System.out.println("=== Alimentações: " + totalAlimentacao);
+        System.out.println("=== Apadrinhamentos: " + totalApadrinhamento);
+        System.out.println("=================================================================");
 
     }
 
@@ -859,13 +895,13 @@ public class Main {
 
         Scanner sc = new Scanner(file);
 
-        System.out.println("============================= LISTA DE INTERACOES =============================");
+        System.out.println("\n====================|| LISTA INTERAÇÕES ||====================");
         while (sc.hasNextLine()) {
             String linha = sc.nextLine();
             String [] array = linha.split(";");
             System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " | " + array[6] + " |");
         }
-        System.out.println("===================================================================");
+        System.out.println("==============================================================");
     }
 
     public static void conteudoClientes() throws IOException {
@@ -874,14 +910,13 @@ public class Main {
 
         Scanner sc = new Scanner(file);
 
-        System.out.println("============================= LISTA DE CLIENTES =============================");
+        System.out.println("\n====================|| LISTA CLIENTES ||====================");
         while (sc.hasNextLine()) {
             String linha = sc.nextLine();
             String [] array = linha.split(";");
             System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " |");
-
         }
-        System.out.println("===================================================================");
+        System.out.println("============================================================");
     }
 
     public static void conteudoAnimais() throws IOException {
@@ -895,7 +930,6 @@ public class Main {
             String linha = sc.nextLine();
             String [] array = linha.split(";");
             System.out.println("| " + array[0] + " | " + array[1] + " | " + array[2] + " | " + array[3] + " | " + array[4] + " | " + array[5] + " |");
-
         }
         System.out.println("==========================================================");
     }
@@ -904,21 +938,31 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        int opcao;
+        int opcaoCliente;
 
         do {
 
             System.out.println("\n====================|| CLIENTE CODESAVANNA ||====================");
-            System.out.println("1. Ver Catálogo De Animais Por Habitat");
-            System.out.println("2. Ver Atividades De Um Animal");
-            System.out.println("3. Simular Apadrinhamento De Um Animal");
-            System.out.println("4. Jogo Adivinha A Especie");
-            System.out.println("0. Voltar");
+            System.out.println("1. === Ver Catálogo De Animais Por Habitat");
+            System.out.println("2. === Ver Atividades De Um Animal");
+            System.out.println("3. === Apadrinhar Um Animal");
+            System.out.println("4. === Jogo: Adivinha A Especie");
+            System.out.println("0. === Voltar");
+            System.out.println("=================================================================");
 
-            System.out.print("Opção: ");
-            opcao = input.nextInt();
+            System.out.print("\n=== Opção: ");
 
-            switch (opcao) {
+            while (!input.hasNextInt()) {
+                System.out.println("\n===================");
+                System.out.println("Mete um número");
+                System.out.println("===================");
+                input.nextLine();
+                System.out.print("\n=== Opção: ");
+            }
+
+            opcaoCliente = input.nextInt();
+
+            switch (opcaoCliente) {
 
                 case 1:
                     catalogoAnimais();
@@ -937,18 +981,24 @@ public class Main {
                     break;
 
                 case 0:
-                    System.out.println("Regressando ao menu principal...");
+                    System.out.println("\nRegressando ao menu principal...");
                     break;
 
                 default:
-                    System.out.println("\nOpção Inválida");
+                    System.out.println("\n================");
+                    System.out.println("Opção Inválida");
+                    System.out.println("================");
                     break;
             }
 
-        } while (opcao != 0);
+        } while (opcaoCliente != 0);
 
     }
 
+    /**
+     * Menu administrador
+     * Serve para opções com dados sensíveis sobre a gestão do zoo
+     */
     public static void menuAdmin() throws IOException{
 
         Scanner input = new Scanner(System.in);
@@ -1070,6 +1120,10 @@ public class Main {
         } while (opcaoAdmin != 0);
     }
 
+    /**
+     * Menu principal
+     * Permite a escolha de perfil e seleciona o menu pretendido com validação de credenciais
+     */
     public static void menuLogin() throws IOException{
 
         Scanner input = new Scanner(System.in);
@@ -1179,6 +1233,11 @@ public class Main {
         } while (opcaoLogin != 0);
     }
 
+    /**
+     * Ponto de partida
+     * Segue para o menu de login para iniciar o programa
+     * @throws IOException caso erro de leitura de ficheiro | geral para o código inteiro
+     */
     public static void main(String[] args) throws IOException{
         menuLogin();
     }
